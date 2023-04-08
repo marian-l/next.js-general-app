@@ -1,0 +1,14 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Lippold;Marian;;;
+FN:Marian Bennet Lippold
+BDAY:1999-01-29
+TITLE: (Working) Student, BGHM Mainz
+TEL: +4915736799795
+GENDER:M
+ADR;TYPE=HOME:;;Brüder-Grimm-Straße 53;Ingelheim am Rhein;;55218;DE
+TEL;TYPE=HOME:  
+EMAIL;TYPE=INTERNET:mlippold.website@gmail.com
+X-ABLABEL:_$!<Website Inquiries>!$_
+NOTE: Hobbies: Friends, Computer Games, Sports, Reading, Travelling, Cooking, Whittling, Coding, Listening Music, Dancing, Cycling\nOccupation: Applied Computer Science\nLanguages: German, English
+END:VCARD

@@ -1,0 +1,27 @@
+.email--container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.caption {
+    color: darkgrey;
+    text-decoration: overline;
+}
+
+.input {
+    font-size: 14px;
+    position: relative;
+
+    border: none;
+    -webkit-appearance: none;
+    -ms-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: darkgrey;
+    padding: 12px;
+    border-radius: 6px;
+    width: 250px;
+    font-size: 14px;
+}
