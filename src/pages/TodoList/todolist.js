@@ -2,55 +2,48 @@ import React from "react";
 
 import styles from "../../styles/todolist.module.css"
 
+import { TodoItem }from "./todoitem"
+
 export default function formData() {
     let data = null;
-    let todoList = null;
-    let tempTodo;
+    let [tempTodo, setTempTodo] = React.useState(
+        [
+            { item: "test", date: Date.now(), due: "11.04.2023" }
+            { item: "exam", date: Date.now(), due: "11.04.2023" }
+            { item: "interview", date: Date.now(), due: "11.04.2023" }
+        ]
+    )
 
-    // this is used in the StateVariable
-    function getTodoList() {
-        if (typeof window !== "undefined") {   
-            data = localStorage.getItem('toDoList')
-        }
-        // console.log(JSON.parse(data))
-        return data ? JSON.parse(data) : []
-    }
-
-    // reads out the todoList and stores it in the State Variable
-    const [formData, setFormData] = React.useState(
-        {
-            item: "",
-            date: "",
-            due: ""
-        }
-    );    
+    const handleDelete = (name) => {
+        const newTempTodo = tempTodo.filter((tempTodo) => tempTodo.item !== name)
+        setTempTodo(newTempTodo);
+    }; 
     
     // this is the button function
     function handleAddTask(event) {
         try {
-            tempTodo = getTodoList();
+            if (typeof window !== "undefined") {   
+
+            }
+            data = data ? JSON.parse(data) : []
         } catch (e) {
             console.log(e)
             return;
         }
+        // localStorage-solution
         if (typeof window !== "undefined") {
-            todoList = JSON.stringify(tempTodo + formData)
-            // localStorage.setItem('toDoList', todoList)
-            localStorage.setItem('toDoList', todoList)
-            console.log("JSON.parse(todoList) 27: ", {todoList})
+//            localStorage.setItem('toDoList', todoList)
         }
 	}
 
     function handleChange(event) {
         const {name} = event.target;
-        setFormData(prevFormData => {
-            // console.log("prevFormData: ", {prevFormData})
+        setTempTodo(prevTodoList => {
             return {
-                ...prevFormData,
+                ...prevTodoList,
                 [name]: event.target.value
             }
         });
-        // console.log(formData) works
     }
 
     function handleSubmit(event) {
@@ -66,7 +59,7 @@ export default function formData() {
                     placeholder="item"
                     type="text" 
                     name="item" 
-                    value={formData ? formData.item : ""} 
+ 
                     required
                 ></input>
                 <input
@@ -74,14 +67,14 @@ export default function formData() {
                     placeholder="date"
                     type="text" 
                     name="date" 
-                    value={formData ? formData.date : ""}
+                    
                 />
                 <input
                     onChange={handleChange} 
                     placeholder="due"
                     type="text" 
                     name="due" 
-                    value={formData ? formData.due : ""}
+                    
                 />
                 <button 
                     type="submit"
@@ -92,12 +85,20 @@ export default function formData() {
                     name="reset"
                     onClick={() => {
                         localStorage.setItem('toDoList', "");
-                        setFormData("");
+                        setTempTodo("");
                     }}>Reset
                 </button>
-                
-                {todoList && <p style={ {color: "white"} }>{JSON.stringify(todoList)}</p>}
-
+                <h1>TODOS:</h1>
+                <div style={styles.list}>
+                    {tempTodo.map((todo) => (
+                        <TodoItem 
+                        item={todo.item}
+                        date={todo.date}
+                        due={todo.due}
+                        delete={() => handleDelete(todo.name)}
+                        />
+                    ))}
+                </div>                
             </form>
         </div>
     )
