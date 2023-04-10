@@ -1,8 +1,23 @@
 import React from "react";
+import { PrismaClient } from "@prisma/client";
 
+// CSS
 import styles from "../../styles/todolist.module.css"
 
+// Components
 import TodoItem from "./todoitem"
+
+const prisma = new PrismaClient();
+
+export async function getServerSideProps() {
+    const prisma_tdlist = await prisma.todoItem.findMany();
+
+    return {
+        props: {
+            initialTodos: prisma_tdlist
+        }
+    }
+}
 
 export default function formData() {
     let id = 0;
