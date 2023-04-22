@@ -12,3 +12,29 @@
     display: inline-flex;
     color: whitesmoke
 }
+
+.qrcode {
+    color: #3E3F4D
+}
+
+.qrbutton:hover {
+    color: #272831;
+    background-color: silver;
+    border-color: #272831;
+    margin: 5px;
+    transition: 
+        color 1s ease,
+        background-color 1s ease,
+        border-color 1s ease;
+    }
+
+.qrbutton:not(:hover) {
+    color: silver;
+    background-color: #272831;
+    border-color: silver;
+    margin: 5px;
+    transition: 
+        color 1s ease,
+        background-color 1s ease,
+        border-color 1s ease;
+}

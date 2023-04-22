@@ -6,7 +6,7 @@
 }
 
 .caption {
-    color: darkgrey;
+    color: #797A8A;
     text-decoration: overline;
 }
 
@@ -24,4 +24,26 @@
     border-radius: 6px;
     width: 250px;
     font-size: 14px;
+}
+
+.button:hover {
+    color: #272831;
+    background-color: silver;
+    border-color: #272831;
+    margin: 5px;
+    transition: 
+        color 1s ease,
+        background-color 1s ease,
+        border-color 1s ease;
+    }
+
+.button:not(:hover) {
+    color: silver;
+    background-color: #272831;
+    border-color: silver;
+    margin: 5px;
+    transition: 
+        color 1s ease,
+        background-color 1s ease,
+        border-color 1s ease;
 }

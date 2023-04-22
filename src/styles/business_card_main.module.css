@@ -1,5 +1,5 @@
 .main {
-    color: #DCDCDC;
+    color: #797A8A;
     width: 60%;
     background-color: #272831;
     margin: auto;
@@ -30,7 +30,7 @@
 
 .name, .email, .profession, .description > h4 {
     text-align: center;
-    color: #D1D5DB;
+    color: #797A8A;
     font-size: large;
 }
 
@@ -55,11 +55,11 @@
 .description > h4{
     padding-left: 10px;
     font-family: 'Inter';
-    color: #D1D5DB;
+    color: #797A8A;
 }
 
 .description > p {
     display: inline-block;
     text-align: left;
-    color: #D1D5DB;
+    color: #797A8A;
 }
