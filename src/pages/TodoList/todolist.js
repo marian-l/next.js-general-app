@@ -1,17 +1,18 @@
 import React from "react";
 import { PrismaClient } from "@prisma/client";
 
+
 // CSS
 import styles from "../../styles/todolist.module.css"
 
 // Components
 import TodoItem from "./todoitem"
 
-const prisma = new PrismaClient();
+let prisma;
 
 export async function getServerSideProps() {
-    const prisma_tdlist = await prisma.todoItem.findMany();
-
+    prisma = new PrismaClient();
+    const prisma_tdlist = await prisma.TodoItem.findMany();
     return {
         props: {
             initialTodos: prisma_tdlist
@@ -19,64 +20,107 @@ export async function getServerSideProps() {
     }
 }
 
-export default function formData() {
+async function saveTodo(todoInformation) {
+    const response = await fetch('api/todo', {
+        method: 'POST',
+        body: JSON.stringify(todoInformation)
+    });
+
+    if (!response.ok) {
+        throw new Error(response.statusText)
+    }
+    // promise
+    return await response.json();
+}
+
+export default function formData(props) {
     let id = 0;
-    let [tempTodo, setTempTodo] = React.useState(
+    let [todoList, setTodoList] = React.useState(
         [
             { id: getId(), item: "test", date: "10.04.23", due: "11.04.2023" },
             { id: getId(), item: "exam", date: "10.04.23", due: "11.04.2023" },
             { id: getId(), item: "interview", date: "10.04.23", due: "11.04.2023" }
         ]
     );
+    const [formItem, setFormItem] = React.useState ({
+        id: "",
+        item: "",
+        date: "",
+        due: ""
+    })
 
-        function getId() {
-            return id++;
-        }
+    function getId() {
+        return id++;
+    }
 
     const removeByName = (nameToDelete) => {
-        setTempTodo(todoList => todoList.filter((name) => name.id !== nameToDelete));
+        setTodoList(todoList => todoList.filter((name) => name.id !== nameToDelete));
     };
     
-    function handleSubmit(event) {
-        event.preventDefault() // stops rerendering which would cause all formData values to be overwritten by default
+    function handleChange (event) {
+        const {name, value} = event.target;
+        setFormItem(prevFormItem => {
+            return {
+                ...prevFormItem,
+                [name]: value
+            }
+        })
     }
 
     return (
         <div className={styles.formData}>
-            <form className={styles.todoform} onSubmit={handleSubmit}>
+            <form 
+            className={styles.todoform} 
+            onSubmit={async (data, e) => {
+                try {
+                    e.preventDefault();
+                    console.log(data)
+                    await saveTodo(data); // alternativ formItem benutzen
+                    setTodoList([...todoList, data]); // was genau ist hier data?
+                    e.target.reset();
+                } catch (err) {
+                    console.log(err)
+                }
+            }}>
                 <label>new Entry</label>
                 <input
-                    placeholder="item"
                     type="text" 
+                    placeholder="item"
+                    onChange={handleChange}
                     name="item" 
- 
-                    required
+                    value={formItem.item}
                 ></input>
                 <input
+                    type="text" 
                     placeholder="date"
-                    type="text" 
+                    onChange={handleChange}
                     name="date" 
-                />
+                    value={formItem.date}
+                ></input>
                 <input
-                    placeholder="due"
                     type="text" 
-                    name="due"   
-                />
+                    placeholder="due"
+                    onChange={handleChange}
+                    name="due" 
+                    value={formItem.due}
+                ></input>
                 <button 
                     type="submit"
-                    onClick={console.log("button clicked")}
-                    >Submit
+
+                    >nothing currently
                 </button>
                 <button
-                    name="reset"
+                    name="undo"
                     onClick={() => {
                         localStorage.setItem('toDoList', "");
-                        setTempTodo("");
-                    }}>Reset
+                        setTodoList(""); // replace with previous State
+                    }}>Undo
                 </button>
                 <h1>TODOS:</h1>
                 <div style={styles.list}>
-                    {tempTodo.map(w => <TodoItem deleteItem={removeByName} { ...w} />)}
+                {props.initialTodos ? 
+                    (props.initialTodos.map(w => <TodoItem deleteItem={removeByName} { ...w} />)) : "" // either todoList is mappable or not.
+                } 
                 </div>                
             </form>
         </div>
