@@ -54,7 +54,7 @@ const Email = () => {
                     </textarea>
                     <p></p>
                     <button 
-                        className="--btn"
+                        className={styles.button}
                         type="submit">
                          Send Message </button>
                 </form>
