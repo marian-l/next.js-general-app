@@ -27,7 +27,7 @@ export default function Home() {
       </p>
       <p>Go to the ToDo List i created: <Link href="TodoList/todolist">Todo-List</Link></p>
       <p>Here are some CSS-Animations i created, recreated and modified <Link href="CssAnimation/cssanimation">Animations</Link></p>
-
+      <p> REACT-HOOK-FORM <Link href="Showcase/react_hook_form">HERE</Link></p>
 {/* 
         <div className={menuStyles.menu}>
           <div className={menuStyles.menu_items}>

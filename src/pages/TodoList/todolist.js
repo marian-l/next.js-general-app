@@ -1,6 +1,6 @@
 import React from "react";
 import { PrismaClient } from "@prisma/client";
-
+import { useForm } from "react-hook-form";
 
 // CSS
 import styles from "../../styles/todolist.module.css"
@@ -42,12 +42,7 @@ export default function formData(props) {
             { id: getId(), item: "interview", date: "10.04.23", due: "11.04.2023" }
         ]
     );
-    const [formItem, setFormItem] = React.useState ({
-        id: "",
-        item: "",
-        date: "",
-        due: ""
-    })
+    const { register, handleSubmit, errors } = useForm();
 
     function getId() {
         return id++;
@@ -56,25 +51,14 @@ export default function formData(props) {
     const removeByName = (nameToDelete) => {
         setTodoList(todoList => todoList.filter((name) => name.id !== nameToDelete));
     };
-    
-    function handleChange (event) {
-        const {name, value} = event.target;
-        setFormItem(prevFormItem => {
-            return {
-                ...prevFormItem,
-                [name]: value
-            }
-        })
-    }
-
     return (
         <div className={styles.formData}>
             <form 
             className={styles.todoform} 
             onSubmit={async (data, e) => {
+                console.log(data)
                 try {
                     e.preventDefault();
-                    console.log(data)
                     await saveTodo(data); // alternativ formItem benutzen
                     setTodoList([...todoList, data]); // was genau ist hier data?
                     e.target.reset();
@@ -86,23 +70,20 @@ export default function formData(props) {
                 <input
                     type="text" 
                     placeholder="item"
-                    onChange={handleChange}
                     name="item" 
-                    value={formItem.item}
+                    {...register("item", { required:true, maxLength: 50})}
                 ></input>
                 <input
                     type="text" 
                     placeholder="date"
-                    onChange={handleChange}
                     name="date" 
-                    value={formItem.date}
+                    {...register("date")}
                 ></input>
                 <input
                     type="text" 
                     placeholder="due"
-                    onChange={handleChange}
                     name="due" 
-                    value={formItem.due}
+                        {...register("due")}
                 ></input>
                 <button 
                     type="submit"
