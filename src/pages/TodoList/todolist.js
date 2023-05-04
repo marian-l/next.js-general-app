@@ -21,7 +21,7 @@ export async function getServerSideProps() {
 }
 
 async function saveTodo(todoInformation) {
-    const response = await fetch('api/todo', {
+    const response = await fetch('../api/todo', {
         method: 'POST',
         body: JSON.stringify(todoInformation)
     });
@@ -42,30 +42,33 @@ export default function formData(props) {
             { id: getId(), item: "interview", date: "10.04.23", due: "11.04.2023" }
         ]
     );
+
     const { register, handleSubmit, errors } = useForm();
+    const onSubmit = async (data, e) => {
+        console.log(data)
+        try {
+            e.preventDefault();
+            savedTodo = await saveTodo(data); // alternativ formItem benutzen
+            setTodoList([...todoList, savedTodo]); // was genau ist hier data?
+            e.target.reset();
+        } catch (err) {
+            console.log(err)
+        }
+       }
+    
+    const removeByName = (nameToDelete) => {
+        setTodoList(todoList => todoList.filter((name) => name.id !== nameToDelete));
+    };
 
     function getId() {
         return id++;
     }
 
-    const removeByName = (nameToDelete) => {
-        setTodoList(todoList => todoList.filter((name) => name.id !== nameToDelete));
-    };
     return (
         <div className={styles.formData}>
             <form 
-            className={styles.todoform} 
-            onSubmit={async (data, e) => {
-                console.log(data)
-                try {
-                    e.preventDefault();
-                    await saveTodo(data); // alternativ formItem benutzen
-                    setTodoList([...todoList, data]); // was genau ist hier data?
-                    e.target.reset();
-                } catch (err) {
-                    console.log(err)
-                }
-            }}>
+                className={styles.todoform} 
+                onSubmit={handleSubmit(onSubmit)}>
                 <label>new Entry</label>
                 <input
                     type="text" 
@@ -87,7 +90,6 @@ export default function formData(props) {
                 ></input>
                 <button 
                     type="submit"
-
                     >nothing currently
                 </button>
                 <button
