@@ -1,0 +1,86 @@
+.main_div {
+    display: flex;
+    text-align: center;
+}
+
+.button_1 {
+    display: flex;
+    padding: 1em 2em;
+    background: #555;
+    border: 0;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font: size 2rem;
+    transition: transform 1000ms;
+}
+
+.button_1:hover {
+    transform: translateY(-0.75rem);
+    transition: transform 250ms;
+}
+
+.button_1:focus-visible {
+    transform: translateY(-0.75rem)
+}
+
+.button_2 {
+    display: flex;
+    padding: 1em 2em;
+    background: #555;
+    border: 0;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font: size 2rem;
+    transition: transform 1000ms;
+}
+
+.button_2:hover {
+    animation: party 2000ms infinite;
+}
+
+@keyframes party {
+    0% {
+        background: red;
+    }
+    20% {
+        background: orangered;
+    }
+    40% {
+        background: orange;
+    }
+    60% {
+        background: orangered;
+    }
+    80% {
+        background: red;
+    }
+    100% {
+        background: orangered;
+    }
+}
+
+.dots {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.dot-dance {
+    animation: dancing-dots 2s infinite alternate;
+    animation-play-state: running;
+}
+
+@keyframes dancing-dots {
+    100% {transform: translateY(100px)}
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    aspect-ratio: 1;
+    background-color: tomato;
+    border-radius: 50%;
+}
+
+.dots:hover .dot:nth-child(1) {
+    animation-delay: 100ms;
+}
