@@ -17,9 +17,10 @@ datasource db {
 
 model TodoItem {
   id String @id @default(cuid()) // collision resistent unique id 
-  item String
+  item String @unique
   date String
   due String
+  done Boolean @default(false)
 }
 
 // npx prisma studio
