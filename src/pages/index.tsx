@@ -25,7 +25,6 @@ export default function Home() {
       <p>
         Go to my business Card if you want to get in touch with me! <Link href='BusinessCard/businessCard'>Profile</Link>
       </p>
-      <p>Go to the ToDo List i created: <Link href="TodoList/todolist">Todo-List</Link></p>
       <p>Here are some CSS-Animations i created, recreated and modified <Link href="CssAnimation/cssanimation">Animations</Link></p>
       <p> REACT-HOOK-FORM <Link href="Showcase/react_hook_form">HERE</Link></p>
 {/* 
